@@ -6,8 +6,6 @@ import org.junit.runner.RunWith;
 import org.mockito.*;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import ua.mamedov.module1.Chess;
-import ua.mamedov.module1.Converter;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ChessTest {
@@ -16,7 +14,7 @@ public class ChessTest {
     Chess chess;
 
     @Mock
-    Converter converter = Mockito.mock(Converter.class);
+    Converter converter;
 
     @Test
     public void converter_nominal() {
@@ -42,5 +40,19 @@ public class ChessTest {
     public void checkForRowsAndCols_wrong_position(){
         boolean result = chess.checkForRowsAndCols(2,8);
         assertFalse(result);
+    }
+
+    @Test
+    public void readUserInputMove_nominal(){
+        Mockito.when(chess.readUserInputMove("B", 3, 1)).thenReturn(1);
+        int result = converter.converter("B",3);
+        assertEquals(1, result);
+    }
+
+    @Test
+    public void readUserInputMove_wrong_cell(){
+        Mockito.when(chess.readUserInputMove("B", 3, 5)).thenReturn(-1);
+        int result = chess.readUserInputMove("B", 3, 5);
+        assertEquals(-1, result);
     }
 }
